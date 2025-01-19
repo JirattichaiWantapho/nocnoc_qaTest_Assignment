@@ -11,13 +11,11 @@ This project automates test cases for the Search Result Page using Playwright to
 
 ## Prerequisites
 - Install Node.js: [Download here](https://nodejs.org)
-- Clone this repository:
-  git clone [repository_url](https://github.com/JirattichaiWantapho/nocnoc_qaTest_Assignment.git)
+- Clone this repository: [https://github.com/JirattichaiWantapho/nocnoc_qaTest_Assignment.git](https://github.com/JirattichaiWantapho/nocnoc_qaTest_Assignment.git)
 
 ## ข้อกำหนดเบื้องต้น
 - ติดตั้ง Node.js: [ดาวน์โหลดที่นี่](https://nodejs.org)
-- Clone this repository:
-  git clone [repository_url](https://github.com/JirattichaiWantapho/nocnoc_qaTest_Assignment.git)
+- Clone this repository:[https://github.com/JirattichaiWantapho/nocnoc_qaTest_Assignment.git](https://github.com/JirattichaiWantapho/nocnoc_qaTest_Assignment.git)
 
 ---
 
