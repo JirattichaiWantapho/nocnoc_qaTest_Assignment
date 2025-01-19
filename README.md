@@ -32,3 +32,44 @@ npx playwright install
 npm install
 npx playwright install
 ```
+
+---
+
+## Running Tests
+Run all tests:
+```bash
+npx playwright test
+```
+
+Run a specific test:
+```bash
+npx playwright test <test_file>
+```
+
+## การรันการทดสอบ
+รันการทดสอบทั้งหมด:
+```bash
+npx playwright test
+```
+
+รันการทดสอบเฉพาะไฟล์:
+```bash
+npx playwright test <test_file>
+```
+
+---
+## Expected Results
+- The console will display the results of the test runs (pass or fail).
+- For detailed HTML reports, use the following command:
+  ```bash
+  npx playwright show-report
+  ```
+
+## ผลลัพธ์ที่คาดหวัง
+- คอนโซลจะแสดงผลลัพธ์ของการทดสอบ (ผ่านหรือไม่ผ่าน)
+- หากต้องการรายงาน HTML แบบละเอียด ใช้คำสั่งต่อไปนี้:
+  ```bash
+  npx playwright show-report
+  ```
+
+---
