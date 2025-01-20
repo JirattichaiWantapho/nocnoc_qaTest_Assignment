@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('testcase_ETax-true', async ({ page }) => {
   await page.goto('https://nocnoc.com/pl/All?area=search&st=%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%97%E0%B8%B3%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%AD%E0%B8%B8%E0%B9%88%E0%B8%99');
   await page.getByRole('button', { name: 'กรองการค้นหา' }).click();
-  await page.locator('div').filter({ hasText: /^E-Tax$/ }).nth(3).click();
+  await page.locator('span').filter({ hasText: 'E-Tax' }).click();
   // get item use xpath
   await page.waitForSelector(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div`);
   const item = await page.locator(
