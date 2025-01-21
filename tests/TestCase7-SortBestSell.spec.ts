@@ -11,9 +11,7 @@ test('testcase_SortbyBestSell', async ({ page }) => {
   await page.waitForTimeout(2500);
   await page.mouse.wheel(0, 30000) // scroll down for load more
   await page.waitForTimeout(500);
-  await page.mouse.wheel(0, 30000)
-  await page.waitForTimeout(500);
-  await page.mouse.wheel(0, 30000)
+
   // get item use xpath
   await page.waitForSelector(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div`);
   const item = await page.locator(
@@ -26,11 +24,11 @@ test('testcase_SortbyBestSell', async ({ page }) => {
   for(let i = 0; i < count; i++){
     //get count of item selled
     ///html/body/div[2]/main/div[2]/div/div[4]/div[2]/div[2]/div[1]/div/a/div[2]/div[4]/div[2]/p
-    const count_item_Selled = await page.locator(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div[${i + 1}]/div/a/div[3]/div[1]/div[1]/p`).textContent();
-    try {} catch (error) {}
+    const count_item_Selled = await page.locator(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div[${i + 1}]`).textContent();
+    const SelledMatch = count_item_Selled?.match(/ขายแล้ว\s*([\d,.k]+)/i);
+    const Selled = SelledMatch ? SelledMatch[1] : '0';
     // split text to get number
-    const countItemText = count_item_Selled?.replace('ขายแล้ว', '').trim() || '';
-    const rawText = countItemText.toLowerCase();
+    const rawText = Selled.toLowerCase();
     let RealCount = 0;
     if (rawText.includes('k')) {
         RealCount = parseFloat(rawText.replace('k', '')) * 1000;
