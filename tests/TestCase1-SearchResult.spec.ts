@@ -12,6 +12,15 @@ test('testcase_SearchResult', async ({ page }) => {
     } catch (error) {
         console.error('Error: Search result heading not found');
     }
+    // check total item
+    const countText = await page.locator(`//span[contains(text(), 'ทั้งหมด') and contains(text(), 'รายการ')]`).textContent();
+    console.log(countText);
+    // Extract the number from the text
+    const itemCountMatch = countText?.match(/ทั้งหมด\s([\d,]+)/);
+    const itemCount = itemCountMatch ? parseInt(itemCountMatch[1].replace(/,/g, '')) : 0;
+    console.log(`Total items: ${itemCount}`);
+    await page.mouse.wheel(0, 10000)
+    await page.waitForTimeout(500);
     //check item use xpath
     await page.waitForSelector(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div`);
     const item = await page.locator( 
@@ -19,19 +28,21 @@ test('testcase_SearchResult', async ({ page }) => {
     );
     const count = await item.count();
     console.log(`Number of matching items: ${count}`);
+    
     for(let i = 0; i < count; i+=2){//skip items because to slow to check all items
         //check item name use xpath
         try {
-            await page.waitForSelector(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div[${i + 1}]/div/a/div[3]/p[2]`);
+            await page.waitForSelector(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`);
         } catch (error) {
             console.error(`Error: Selector for item ${i + 1} not found`);
         }
-        const name = await page.locator(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div[${i + 1}]/div/a/div[3]/p[2]`);
+        const nameLocator = await page.locator(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`);
         //error handling
         try {
-            await expect(name).toHaveText(/เครื่องทำน้ำอุ่น|เครื่องทำน้ำร้อน|WATER SHOWER|WATER HEATER|water heater/);
+            await expect(nameLocator).toHaveText(/เครื่องทำน้ำอุ่น|เครื่องทำน้ำร้อน|WATER SHOWER|WATER HEATER|water heater/);
+            console.log(`Item ${i + 1}: ${await nameLocator.textContent()}`);
         } catch (error) {
-            const textContent = await name.textContent();
+            const textContent = await nameLocator.textContent();
             console.error(`Error checking item ${i + 1}:`, textContent);
         }
     }

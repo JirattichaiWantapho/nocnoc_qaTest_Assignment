@@ -8,6 +8,7 @@ test('testcase_Service', async ({ page }) => {
   await page.getByRole('button', { name: 'กรองการค้นหา' }).click();
   await page.getByRole('heading', { name: 'บริการประกอบ/ติดตั้ง' }).click();
   await page.getByRole('heading', { name: 'ชื่อร้านค้า' }).click();
+  await page.getByRole('button', { name: 'แสดงเพิ่ม' }).nth(1).click();
 
   // get store use xpath
   const store = await page.locator(
@@ -44,7 +45,7 @@ for (let i = 0; i < 3; i++) {
   for(let i = 0; i < count; i+=2){//skip items because to slow to check all items 
     // get item name use xpath /html/body/div[2]/main/div[2]/div/div[4]/div[2]/div[2]/div[1]/div/a/div[3] /html/body/div[2]/main/div[2]/div/div[4]/div[2]/div[2]/div[2]/div/a/div[2]/div[1]/p[1]
     await page.waitForSelector(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div[${i + 1}]`);
-    const element = page.locator(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div[${i + 1}]/div/a/div[3]/p[1]`);
+    const element = page.locator(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div[${i + 1}]//p[contains(@class, 'bu-typography-caption-5')]`);
     // find all text content
     const text = await element.textContent();
     const text_item_lower = text?.toLowerCase();
