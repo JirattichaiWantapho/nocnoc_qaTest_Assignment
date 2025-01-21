@@ -30,7 +30,16 @@ Run a specific test:
 ```bash
 npx playwright test <test_file>
 ```
-
+Run tests in debug mode:
+Debug mode pauses execution and allows inspection using Playwright Inspector
+```bash
+npx playwright test --debug
+```
+Run tests in headed mode:
+Run tests with the browser visible (non-headless mode):
+```bash
+npx playwright test --headed
+```
 ---
 ## Expected Results
 - The console will display the results of the test runs (pass or fail).
@@ -68,7 +77,11 @@ npx playwright test
 ```bash
 npx playwright test <test_file>
 ```
+รันการทดสอบในโหมดดีบัก:
+```bash
+npx playwright test --debug
 
+```
 ## ผลลัพธ์ที่คาดหวัง
 - คอนโซลจะแสดงผลลัพธ์ของการทดสอบ (ผ่านหรือไม่ผ่าน)
 - หากต้องการรายงาน HTML แบบละเอียด ใช้คำสั่งต่อไปนี้:
