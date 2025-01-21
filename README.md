@@ -1,5 +1,5 @@
 # nocnoc_qaTest_Assignment
-[Download the PDF Report]
+[Download the PDF Report](nocnoc_qa_report_.pdf)
 ## Objective
 This project automates test cases for the Search Result Page using Playwright to verify functionality like search, filters, and sorting.
 
