@@ -25,17 +25,17 @@ test('testcase_Brand', async ({ page }) => {
   }
   await page.waitForTimeout(2000);
   // get item use xpath
-  await page.waitForSelector(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div`);
+  await page.waitForSelector(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])`);
   const item = await page.locator(
-    `//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div`
+    `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])`
   );
   // get count of item
   const count_item = await item.count();
   console.log(`Number of matching items: ${count_item}`);
   for(let i = 0; i < count_item; i+=2){//skip items because to slow to check all items
     //check item name use xpath
-    await page.waitForSelector(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div[${i + 1}]/div/a/div[3]/p[2]`);
-    const name_item = await page.locator(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div[${i + 1}]/div/a/div[3]/p[2]`).textContent();
+    await page.waitForSelector(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`);
+    const name_item = await page.locator(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`).textContent();
     //change to item name to lower case
     const name_item_lower = name_item?.toLowerCase();
     //error handling check item name with 3 selected brand 

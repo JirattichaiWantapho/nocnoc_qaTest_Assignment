@@ -9,18 +9,18 @@ test('testcase_Service', async ({ page }) => {
 
   // get item use xpath
   await page.waitForTimeout(2000);
-  await page.waitForSelector(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div`);
+  await page.waitForSelector(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])`);
   const item = await page.locator(
-  `//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div`
+  `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])`
   );
   // get count of item
   const count = await item.count();
   console.log(`Number of matching items: ${count}`);
-  await page.waitForSelector(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div`);
+  await page.waitForSelector(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])`);
   for(let i = 0; i < count; i++){//skip items because to slow to check all items 
     // get item name use xpath
-    await page.waitForSelector(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div[${i + 1}]`);
-    const element = page.locator(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div[${i + 1}]`);
+    await page.waitForSelector(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`);
+    const element = page.locator(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`);
 
     // find all text content
     const text = await element.textContent();
@@ -28,6 +28,7 @@ test('testcase_Service', async ({ page }) => {
     try {
       // check ติดตั้งฟรี
       await expect(text).toContain('ติดตั้งฟรี');
+      console.log(`Item ${i + 1}: has 'ติดตั้งฟรี'`);
     } catch (error) {
       console.error(`Error: Item ${i + 1} does not have 'ติดตั้งฟรี'`);
     }

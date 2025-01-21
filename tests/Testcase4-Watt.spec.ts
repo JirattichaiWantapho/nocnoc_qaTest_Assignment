@@ -14,8 +14,8 @@ test('testcase_Watt', async ({ page }) => {
     //delay 1 second
     await page.waitForTimeout(3000);
     // get item use xpath
-    await page.waitForSelector(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div`);
-    const item = await page.locator(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div`);
+    await page.waitForSelector(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])`);
+    const item = await page.locator(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])`);
     // get count of item
     const count = await item.count();
     console.error(`Number of matching items: ${count}`);
@@ -24,11 +24,11 @@ test('testcase_Watt', async ({ page }) => {
     // loop to check item
     for(let i = 0; i < count; i++){//skip items because to slow to check all items
       // get item name use xpath
-      await page.waitForSelector(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div[${i + 1}]`);
+      await page.waitForSelector(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`);
       // await page.click(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div[${i + 1}]`);
       const [newPage] = await Promise.all([
         page.context().waitForEvent('page'), // ตรวจจับการเปิดแท็บใหม่
-        await page.click(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div[${i + 1}]`), // คลิกเพื่อเปิดแท็บใหม่
+        await page.click(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`), // คลิกเพื่อเปิดแท็บใหม่
       ]);
       // รอให้แท็บใหม่โหลด
       await newPage.bringToFront();

@@ -23,18 +23,31 @@ for(let i = 0; i < count; i+=2){//skip items because to slow to check all items
       console.error(`Error: Selector for item ${i + 1} not found`);
     }
     // get item name and store use xpath
+    
     await page.waitForSelector(
+        `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]//p[contains(@class, 'bu-line-clamp-2')]`
+    );
+    const elements = await page.locator(
       `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]//p[contains(@class, 'bu-line-clamp-2')]`
     );
-    const elements = page.locator(
-      `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]//p[contains(@class, 'bu-line-clamp-2')]`
+    const ReserveElements = await page.locator(
+      `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]//div[contains(@class, 'bu-flex-col')]`
     );
+    let nameItem;
+    let nameStore;
+    const elementsCount = await elements.count();
+    if (elementsCount > 1) {
+      nameItem = await elements.nth(1).textContent();
+      nameStore = await elements.nth(0).textContent();
+    }else{
+      nameItem = await elements.textContent();
+      nameStore = await ReserveElements.first().textContent();
+    }
+
+    
+    
     // console.log(elements.count());
-    const nameItem = await page.locator(
-      `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]//p[contains(@class, 'bu-line-clamp-2')]`
-    ).nth(1).textContent();
-    const nameStore = await page.locator(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]//p[contains(@class, 'bu-line-clamp-2')]`
-    ).first().textContent();
+    
     console.log(`Item Name: ${nameItem}`);
     console.log(`Store Name: ${nameStore}`);
     const [newPage] = await Promise.all([
@@ -56,8 +69,8 @@ for(let i = 0; i < count; i+=2){//skip items because to slow to check all items
       await newPage.mouse.wheel(0, 10000) // scroll down for again
       //check store name
       const store_name_newpage = await newPage.locator(`//a[contains(@class, 'shop-name-info')]`).textContent();
-console.log(`Name on new page: ${Item_name_newpage}`);
-console.log(`Store on new page: ${store_name_newpage}`);
+      console.log(`Name on new page: ${Item_name_newpage}`);
+      console.log(`Store on new page: ${store_name_newpage}`);
 
       await expect(await nameItem).toBe(Item_name_newpage);
       await expect(await nameStore).toBe(store_name_newpage);
