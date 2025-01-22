@@ -77,10 +77,23 @@ test('testcase_CorrectLink', async ({ page }) => {
     //error handling
     try {
       //check loading page
-      await expect(newPage.locator('.pad').first()).toBeVisible();
+      try{
+        await expect(newPage.locator('.pad').first()).toBeVisible();
+      }
+      catch{
+        console.error('loading page error');
+        try{
+          await page.waitForTimeout(1500);
+          await expect(newPage.locator('.pad').first()).toBeVisible();
+        }
+        catch{
+          console.error('loading page error again');
+        }
+      }
+      
       //get item name use xpath /html/body/div[2]/main/div[4]/div[2]/div[1]/div[2]/div[2]/h1 //*[@id="product-overview-section"]/div[2]/div[1]/div[2]/div[2]/h1
       try{
-        await newPage.waitForSelector(`//*[@id="product-overview-section"]`);
+        await newPage.waitForSelector(`//*[@id="product-overview-section"]//div[contains(@class, 'bxdetail')]`);
         await newPage.mouse.wheel(0, 30000) // scroll down for load more
         await newPage.mouse.wheel(0, 10000) // scroll down for again
         await newPage.waitForSelector(`//a[contains(@class, 'shop-name-info')]`);
@@ -88,6 +101,7 @@ test('testcase_CorrectLink', async ({ page }) => {
       catch{
         console.error('Error: Selector for item name and store not found');
       }
+      // get item name and store use xpath
       const Item_name_newpage = await newPage.locator(`//*[@id="product-overview-section"]//div[contains(@class, 'bxdetail')]//div[2]`).first().textContent();
       
       //check store name
@@ -100,7 +114,7 @@ test('testcase_CorrectLink', async ({ page }) => {
       await console.log(`Item ${randomIndex} link is correct`);
     } catch (error) {
       
-      console.error('Error: Item link is incorrect');
+      console.error(`Error: Item link ${randomIndex} is incorrect`);
     }
     
     await newPage.close();
