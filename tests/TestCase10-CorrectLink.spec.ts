@@ -14,9 +14,11 @@ const item = await page.locator(
 const count = await item.count();
 console.log(`Number of matching items: ${count}`);
 
+
 for(let i = 0; i < count; i+=2){//skip items because to slow to check all items
     // get item name use xpath
     //check item name use xpath
+    
     try {
       await page.waitForSelector(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`);
     } catch (error) {
@@ -42,14 +44,17 @@ for(let i = 0; i < count; i+=2){//skip items because to slow to check all items
     }else{
       nameItem = await elements.textContent();
       nameStore = await ReserveElements.first().textContent();
+      if (nameStore && nameItem) {
+        nameStore = nameStore.split(nameItem)[0].trim();
+      }
     }
 
     
     
     // console.log(elements.count());
     
-    console.log(`Item Name: ${nameItem}`);
-    console.log(`Store Name: ${nameStore}`);
+    console.log(`Item Name: ${nameItem}`, `Store Name: ${nameStore}`);
+    
     const [newPage] = await Promise.all([
       page.context().waitForEvent('page'), // detect new page
       await page.click(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`), // click item
@@ -58,25 +63,26 @@ for(let i = 0; i < count; i+=2){//skip items because to slow to check all items
     await newPage.bringToFront();
     await newPage.waitForLoadState();
 
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(1500);
     //error handling
     try {
       //check loading page
       await expect(newPage.locator('.pad').first()).toBeVisible();
       //get item name use xpath /html/body/div[2]/main/div[4]/div[2]/div[1]/div[2]/div[2]/h1 //*[@id="product-overview-section"]/div[2]/div[1]/div[2]/div[2]/h1
-      const Item_name_newpage = await newPage.locator(`//*[@id="product-overview-section"]/div[2]/div[1]/div[2]/div[2]/h1`).textContent();
+      const Item_name_newpage = await newPage.locator(`//h1[contains(@class, 'bu-typography-heading')]`).textContent();
       await newPage.mouse.wheel(0, 30000) // scroll down for load more
       await newPage.mouse.wheel(0, 10000) // scroll down for again
       //check store name
       const store_name_newpage = await newPage.locator(`//a[contains(@class, 'shop-name-info')]`).textContent();
-      console.log(`Name on new page: ${Item_name_newpage}`);
-      console.log(`Store on new page: ${store_name_newpage}`);
+      console.log(`Name on new page: ${Item_name_newpage}`, `Store on new page: ${store_name_newpage}`);
+
 
       await expect(await nameItem).toBe(Item_name_newpage);
       await expect(await nameStore).toBe(store_name_newpage);
       await console.log(`Item ${i + 1} link is correct`);
     } catch (error) {
-        console.error('Error: Item link is incorrect');
+      
+      console.error('Error: Item link is incorrect');
     }
     
     await newPage.close();
