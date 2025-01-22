@@ -88,7 +88,7 @@ test('testcase_CorrectLink', async ({ page }) => {
       catch{
         console.error('Error: Selector for item name and store not found');
       }
-      const Item_name_newpage = await newPage.locator(`//*[@id="product-overview-section"]/div[2]/div[1]/div[2]/div[2]/h')]`).textContent();
+      const Item_name_newpage = await newPage.locator(`//*[@id="product-overview-section"]//div[contains(@class, 'bxdetail')]//div[2]`).first().textContent();
       
       //check store name
       const store_name_newpage = await newPage.locator(`//a[contains(@class, 'shop-name-info')]`).textContent();
