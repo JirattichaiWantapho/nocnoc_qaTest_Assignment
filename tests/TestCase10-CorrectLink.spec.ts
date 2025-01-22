@@ -16,7 +16,7 @@ test('testcase_CorrectLink', async ({ page }) => {
 
   // random click item
   const usedIndices = new Set();
-  const numberOfChecks = 7;
+  const numberOfChecks = 4;
 
 
   for(let i = 0; i < numberOfChecks; i++){

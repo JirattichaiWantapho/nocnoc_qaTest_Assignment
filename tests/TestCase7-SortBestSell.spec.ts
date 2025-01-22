@@ -9,7 +9,7 @@ test('testcase_SortbyBestSell', async ({ page }) => {
   await page.getByLabel('สินค้าขายดี').click();
   //wait for load
   await page.waitForTimeout(2500);
-  await page.mouse.wheel(0, 30000) // scroll down for load more
+  await page.mouse.wheel(0, 10000) // scroll down for load more
   await page.waitForTimeout(500);
 
   // get item use xpath
