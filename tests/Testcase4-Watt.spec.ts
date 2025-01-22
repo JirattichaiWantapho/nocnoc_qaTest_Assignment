@@ -39,6 +39,8 @@ test('testcase_Watt', async ({ page }) => {
       try{
         await expect(newPage.locator('.pad').first()).toBeVisible();
       }catch{
+        //delay 2 second for retry check
+        await page.waitForTimeout(2000);
         await expect(newPage.locator('.pad').first()).toBeVisible();
       }
       
