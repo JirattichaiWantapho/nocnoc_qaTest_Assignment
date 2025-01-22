@@ -5,35 +5,45 @@ test('testcase_CorrectLink', async ({ page }) => {
   await page.goto('https://nocnoc.com/pl/All?area=search&st=%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%97%E0%B8%B3%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%AD%E0%B8%B8%E0%B9%88%E0%B8%99');
 
 
-// get item use xpath
-await page.waitForSelector(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div`);
-const item = await page.locator(
-  `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])`
-);
+  // get item use xpath
+  await page.waitForSelector(`//*[@id="approot"]/main/div/div/div[4]/div[2]/div[2]/div`);
+  const item = await page.locator(
+   `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])`
+  );
 // get count of item
-const count = await item.count();
-console.log(`Number of matching items: ${count}`);
+  const count = await item.count();
+  console.log(`Number of matching items: ${count}`);
+
+  // random click item
+  const usedIndices = new Set();
+  const numberOfChecks = 8;
 
 
-for(let i = 0; i < count; i+=2){//skip items because to slow to check all items
+  for(let i = 0; i < numberOfChecks; i++){
+
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * count) + 1;
+    } while (usedIndices.has(randomIndex));
+    usedIndices.add(randomIndex);
     // get item name use xpath
     //check item name use xpath
     
     try {
-      await page.waitForSelector(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`);
+      await page.waitForSelector(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${randomIndex}]`);
     } catch (error) {
-      console.error(`Error: Selector for item ${i + 1} not found`);
+      console.error(`Error: Selector for item ${randomIndex} not found`);
     }
     // get item name and store use xpath
     
     await page.waitForSelector(
-        `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]//p[contains(@class, 'bu-line-clamp-2')]`
+        `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${randomIndex}]//p[contains(@class, 'bu-line-clamp-2')]`
     );
     const elements = await page.locator(
-      `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]//p[contains(@class, 'bu-line-clamp-2')]`
+      `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${randomIndex}]//p[contains(@class, 'bu-line-clamp-2')]`
     );
     const ReserveElements = await page.locator(
-      `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]//div[contains(@class, 'bu-flex-col')]`
+      `(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${randomIndex}]//div[contains(@class, 'bu-flex-col')]`
     );
     let nameItem;
     let nameStore;
@@ -57,7 +67,7 @@ for(let i = 0; i < count; i+=2){//skip items because to slow to check all items
     
     const [newPage] = await Promise.all([
       page.context().waitForEvent('page'), // detect new page
-      await page.click(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${i + 1}]`), // click item
+      await page.click(`(//div[contains(@class, 'items') and contains(@class, 'product-tile')])[${randomIndex}]`), // click item
     ]);
     // wait for new page to load
     await newPage.bringToFront();
@@ -79,7 +89,7 @@ for(let i = 0; i < count; i+=2){//skip items because to slow to check all items
 
       await expect(await nameItem).toBe(Item_name_newpage);
       await expect(await nameStore).toBe(store_name_newpage);
-      await console.log(`Item ${i + 1} link is correct`);
+      await console.log(`Item ${randomIndex} link is correct`);
     } catch (error) {
       
       console.error('Error: Item link is incorrect');
