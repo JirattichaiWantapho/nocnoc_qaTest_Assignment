@@ -79,9 +79,17 @@ test('testcase_CorrectLink', async ({ page }) => {
       //check loading page
       await expect(newPage.locator('.pad').first()).toBeVisible();
       //get item name use xpath /html/body/div[2]/main/div[4]/div[2]/div[1]/div[2]/div[2]/h1 //*[@id="product-overview-section"]/div[2]/div[1]/div[2]/div[2]/h1
+      try{
+        await newPage.waitForSelector(`//*[@id="product-overview-section"]`);
+        await newPage.mouse.wheel(0, 30000) // scroll down for load more
+        await newPage.mouse.wheel(0, 10000) // scroll down for again
+        await newPage.waitForSelector(`//a[contains(@class, 'shop-name-info')]`);
+      }
+      catch{
+        console.error('Error: Selector for item name and store not found');
+      }
       const Item_name_newpage = await newPage.locator(`//*[@id="product-overview-section"]/div[2]/div[1]/div[2]/div[2]/h')]`).textContent();
-      await newPage.mouse.wheel(0, 30000) // scroll down for load more
-      await newPage.mouse.wheel(0, 10000) // scroll down for again
+      
       //check store name
       const store_name_newpage = await newPage.locator(`//a[contains(@class, 'shop-name-info')]`).textContent();
       console.log(`Name on new page: ${Item_name_newpage}`, `Store on new page: ${store_name_newpage}`);
