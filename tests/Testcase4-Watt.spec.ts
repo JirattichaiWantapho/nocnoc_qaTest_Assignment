@@ -34,8 +34,14 @@ test('testcase_Watt', async ({ page }) => {
       await newPage.bringToFront();
       await newPage.waitForLoadState();
       // คลิกที่ลิงค์ "คุณสมบัติสินค้า"
-      await page.waitForTimeout(3000);
-      await expect(newPage.locator('.pad').first()).toBeVisible();
+      await page.waitForTimeout(2000);
+      // check load done
+      try{
+        await expect(newPage.locator('.pad').first()).toBeVisible();
+      }catch{
+        await expect(newPage.locator('.pad').first()).toBeVisible();
+      }
+      
       name_item[i] = (await newPage.locator(`//*[@id="product-overview-section"]/div[2]/div[1]/div[2]/div[2]/h1`).textContent()) || '' ;
       await newPage.mouse.wheel(0, 30000) // scroll down for load more
       await newPage.mouse.wheel(0, 5000) // scroll down for again

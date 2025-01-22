@@ -79,7 +79,7 @@ test('testcase_CorrectLink', async ({ page }) => {
       //check loading page
       await expect(newPage.locator('.pad').first()).toBeVisible();
       //get item name use xpath /html/body/div[2]/main/div[4]/div[2]/div[1]/div[2]/div[2]/h1 //*[@id="product-overview-section"]/div[2]/div[1]/div[2]/div[2]/h1
-      const Item_name_newpage = await newPage.locator(`//h1[contains(@class, 'bu-typography-heading')]`).textContent();
+      const Item_name_newpage = await newPage.locator(`//*[@id="product-overview-section"]/div[2]/div[1]/div[2]/div[2]/h')]`).textContent();
       await newPage.mouse.wheel(0, 30000) // scroll down for load more
       await newPage.mouse.wheel(0, 10000) // scroll down for again
       //check store name
