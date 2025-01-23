@@ -138,9 +138,9 @@ npx playwright test --headed
   ```
   In test case ,I found some item not sort
 ```bash
+  Item 26 sell: 60
   Item 27 sell: 61
-  Item 27 : 61 => sell more than Item 26: 60                                                                                                                            
-  Item 28 sell: 58
+  Item 27 : 61 => sell more than Item 26: 60
   .
   .
   .
