@@ -9,6 +9,7 @@ test('testcase_Watt', async ({ page }) => {
   try {
     // check result change max value to 45000 
     await expect(page.getByRole('textbox', { name: 'สูงสุด' }).inputValue()).toBe('45000');
+    console.log('Change max value to 45000');
   } catch (error) {
     console.error('ERROR: Still have item less than 1999 watt');
     //delay 1 second

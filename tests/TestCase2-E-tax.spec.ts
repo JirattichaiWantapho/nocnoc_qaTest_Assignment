@@ -19,6 +19,7 @@ test('testcase_ETax-true', async ({ page }) => {
     const img = await page.locator(`//*[@id="approot"]/main/div[2]/div/div[4]/div[2]/div[2]/div[${i + 1}]/div/a/div[1]/div[1]/img`);
     try {
       await expect(img).toHaveAttribute('src', '/static/images/e-tax.png');
+      console.log(`Item ${i + 1} has E-Tax icon.`);
     } catch (error) {
       console.error(`Item ${i + 1} does not have E-Tax icon.`);
     }
