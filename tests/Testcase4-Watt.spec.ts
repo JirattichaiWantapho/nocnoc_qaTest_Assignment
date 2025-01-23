@@ -6,6 +6,7 @@ test('testcase_Watt', async ({ page }) => {
   await page.locator('div').filter({ hasText: /^กำลังไฟฟ้า \(วัตต์\)$/ }).nth(1).click();
   await page.getByRole('textbox', { name: 'สูงสุด' }).fill('1999');
   await page.getByRole('textbox', { name: 'สูงสุด' }).press('Enter');
+  console.log('Filter by watt less than 1999');
   try {
     // check result change max value to 45000 
     await expect(page.getByRole('textbox', { name: 'สูงสุด' }).inputValue()).toBe('45000');
