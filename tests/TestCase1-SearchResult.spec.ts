@@ -40,7 +40,7 @@ test('testcase_SearchResult', async ({ page }) => {
         //error handling
         try {
             await expect(nameLocator).toHaveText(/เครื่องทำน้ำอุ่น|เครื่องทำน้ำร้อน|WATER SHOWER|WATER HEATER|water heater/);
-            console.log(`Item ${i + 1}: ${await nameLocator.textContent()}`);
+            console.log(`|Has Tag| in Item ${i + 1}: ${await nameLocator.textContent()}`);
         } catch (error) {
             const textContent = await nameLocator.textContent();
             console.error(`Error checking item ${i + 1}:`, textContent);
