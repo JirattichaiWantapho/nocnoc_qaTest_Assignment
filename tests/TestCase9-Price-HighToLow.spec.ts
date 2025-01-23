@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { error } from 'console';
 
-test('testcase_SortbyPriceHighToLow', async ({ page }) => {
+test('testcase_Price-HighToLow', async ({ page }) => {
   await page.goto('https://nocnoc.com/pl/All?area=search&st=%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%97%E0%B8%B3%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%AD%E0%B8%B8%E0%B9%88%E0%B8%99');
   //close ask cookie
   await page.locator(`//*[@id="approot"]/div[4]/div/div/div[2]/a[3]/i`).click();
